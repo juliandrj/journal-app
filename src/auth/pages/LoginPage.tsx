@@ -16,7 +16,7 @@ export const LoginPage = () => {
                         <TextField fullWidth label="contraseña" type="password" placeholder="contraseña"/>
                     </Grid>
                 </Grid>
-                <Grid container>
+                <Grid container spacing={2}>
                     <Grid size={{xs:12, sm:6}} sx={{mt: 2}}>
                         <Button fullWidth variant="contained" color="primary">Login</Button>
                     </Grid>
