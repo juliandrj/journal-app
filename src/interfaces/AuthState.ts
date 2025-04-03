@@ -1,8 +1,6 @@
+import { User } from "./User";
+
 export interface AuthState {
     status: 'checking' | 'authenticated' | 'not-authenticated';
-    uid?: string;
-    email?: string;
-    displayName?: string;
-    photoURL?: string;
-    errorMessage?: string;
+    user?: User;
 }

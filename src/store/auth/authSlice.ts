@@ -2,7 +2,7 @@ import { createSlice } from '@reduxjs/toolkit';
 import { AuthState } from '../../interfaces';
 
 const initialState: AuthState = {
-    status: 'checking',
+    status: 'not-authenticated',
 };
 
 export const authSlice = createSlice({
@@ -14,6 +14,7 @@ export const authSlice = createSlice({
         logout: (state, action) => {
         },
         checkingCredentials: (state) => {
+            state.status = 'checking';
         },
     }
 });
