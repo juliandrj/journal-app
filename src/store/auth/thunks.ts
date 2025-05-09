@@ -1,7 +1,7 @@
 import { signInWithGoogle } from "../../firebase/providers";
-import { Error, LoginForm } from "../../interfaces";
+import { LoginForm, User } from "../../interfaces";
 import { AppDispatch } from "../store";
-import { checkingCredentials } from "./authSlice";
+import { checkingCredentials, login, logout } from "./authSlice";
 
 export const checkingAuthentication = (loginForm:LoginForm) => {
     return async (dispatch:AppDispatch) => {
@@ -13,14 +13,24 @@ export const starGoogleSingIn = () => {
     return async (dispatch:AppDispatch) => {
         dispatch(checkingCredentials());
         try {
-            const user = await signInWithGoogle();
-            console.log({user});
+            const result = await signInWithGoogle();
+            if (result && result.user) {
+                const user: User = {
+                    uid: result.user.uid,
+                    displayName: result.user.displayName || "",
+                    email: result.user.email || "",
+                    photoURL: result.user.photoURL || "",
+                }
+                dispatch(login(user));
+            } else {
+                dispatch(logout("No user found"));
+            }
         } catch (e) {
-            const error : Error = {
-                code: '1',
-                message: e as string
-            };
-            console.log({error});
+            if (e instanceof Error) {
+                dispatch(logout(e.message));
+            } else {
+                dispatch(logout(e));
+            }
         }
     }
 }
