@@ -1,5 +1,5 @@
 import { UserCredential } from "firebase/auth";
-import { signInWithGoogle, registerUserWithEmailPassword, signInWithEmailPassword } from '../../firebase/providers';
+import { signInWithGoogle, registerUserWithEmailPassword, signInWithEmailPassword, logoutFirebase } from '../../firebase/providers';
 import { LoginForm, RegisterForm, User } from "../../interfaces";
 import { AppDispatch } from "../store";
 import { checkingCredentials, login, logout } from "./authSlice";
@@ -76,5 +76,12 @@ export const startLoginWithEmailPassword = (loginForm: LoginForm) => {
                 dispatch(logout(e));
             }
         }
+    }
+}
+
+export const startLogout = () => {
+    return async(dispatch:AppDispatch) => {
+        await logoutFirebase();
+        dispatch(logout("Sesión finalizada."));
     }
 }

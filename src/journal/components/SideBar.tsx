@@ -1,14 +1,17 @@
 import { Box, Divider, Drawer, Grid2 as Grid, List, ListItem, ListItemButton, ListItemIcon, ListItemText, Toolbar, Typography } from "@mui/material"
 import { DrawerWidthComponentProps } from "../../interfaces"
 import { TurnedInNot } from "@mui/icons-material"
+import { useSelector } from "react-redux";
+import { RootState } from "../../store";
 
 export const SideBar = ({drawerWidth} : DrawerWidthComponentProps) => {
+    const {user} = useSelector((state:RootState) => state.auth);
     return (
         <Box component="nav" sx={{width: {sm: drawerWidth}, flexShrink: {sm: 0}}}>
             <Drawer variant="permanent" open sx={{display: {sm: 'block'}, '& .MuiDrawer-paper': {width: drawerWidth, boxSizing: 'border-box'}}}>
                 <Toolbar>
                     <Typography variant="h6" noWrap component="div">
-                        Julian Rojas
+                        {user?.displayName}
                     </Typography>
                 </Toolbar>
                 <Divider />

@@ -1,8 +1,14 @@
 import { LogoutOutlined, MenuOutlined } from "@mui/icons-material"
 import { AppBar, IconButton, Toolbar, Typography } from '@mui/material';
 import { DrawerWidthComponentProps } from "../../interfaces"
+import { startLogout } from "../../store/auth";
+import { useAppDispatch } from "../../store";
 
 export const NavBar = ({drawerWidth} : DrawerWidthComponentProps) => {
+    const dispatch = useAppDispatch();
+    const onLogout = () => {
+        dispatch(startLogout());
+    }
     return (
         <AppBar position='fixed' sx={{width: {sm: `calc(100% - ${drawerWidth}px)`}, ml: {sm: `${drawerWidth}px`}}}>
             <Toolbar variant="dense">
@@ -12,7 +18,7 @@ export const NavBar = ({drawerWidth} : DrawerWidthComponentProps) => {
                 <Typography variant="h6" noWrap component="div" sx={{flexGrow: 1}}>
                     Journal
                 </Typography>
-                <IconButton edge="end" color="error">
+                <IconButton edge="end" color="error" onClick={onLogout}>
                     <LogoutOutlined />
                 </IconButton>
             </Toolbar>
