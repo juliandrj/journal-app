@@ -12,6 +12,7 @@ export const authSlice = createSlice({
         login: (state, action) => {
             state.status = 'authenticated';
             state.user = action.payload;
+            state.errorMessage = undefined;
         },
         logout: (state, action) => {
             state.status = 'not-authenticated';
@@ -20,6 +21,7 @@ export const authSlice = createSlice({
         },
         checkingCredentials: (state) => {
             state.status = 'checking';
+            state.errorMessage = undefined;
         },
     }
 });

@@ -1,5 +1,5 @@
 import { Google } from "@mui/icons-material"
-import { Button, Link, TextField, Typography } from "@mui/material"
+import { Alert, Button, Link, TextField, Typography } from "@mui/material"
 import Grid from "@mui/material/Grid2"
 import { Link as RouterLink } from "react-router-dom"
 import { AuthLayout } from "../layout/AuthLayout"
@@ -13,7 +13,7 @@ import { SubmitHandler, useForm } from "react-hook-form"
 
 export const LoginPage = () => {
     const dispatch = useAppDispatch();
-    const {status} = useSelector((state:RootState) => state.auth);
+    const {status, errorMessage} = useSelector((state:RootState) => state.auth);
     const isAuthenticating = useMemo(() => status === "checking", [status]);
     const { register,
         handleSubmit,
@@ -34,6 +34,11 @@ export const LoginPage = () => {
                     </Grid>
                     <Grid size={{xs:12}} sx={{mt: 2}}>
                         <TextField fullWidth label="contraseña" type="password" placeholder="contraseña" error={errors.password !== undefined} helperText={errors.password && "Contraseña requerida"} {...register("password", {required: true})} />
+                    </Grid>
+                </Grid>
+                <Grid container spacing={2} display={!!errorMessage ? '' : 'none'}>
+                    <Grid size={{xs: 12}} sx={{mt: 2}}>
+                        <Alert severity="error">{ errorMessage }</Alert>
                     </Grid>
                 </Grid>
                 <Grid container spacing={2}>

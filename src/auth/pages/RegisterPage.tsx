@@ -1,14 +1,18 @@
-import { Button, Link, TextField, Typography } from "@mui/material"
+import { Alert, Button, Link, TextField, Typography } from "@mui/material"
 import Grid from "@mui/material/Grid2"
 import { Link as RouterLink } from "react-router-dom"
 import { AuthLayout } from "../layout/AuthLayout"
 import { RegisterForm } from "../../interfaces"
 import { SubmitHandler, useForm } from "react-hook-form"
-import { useAppDispatch } from "../../store"
+import { RootState, useAppDispatch } from "../../store"
 import { starWithEmailPassword } from "../../store/auth"
+import { useSelector } from "react-redux"
+import { useMemo } from "react"
 
 export const RegisterPage = () => {
     const dispatch = useAppDispatch();
+    const {status, errorMessage} = useSelector((state:RootState) => state.auth);
+    const isAuthenticating = useMemo(() => status === "checking", [status]);
     const { register,
             handleSubmit,
             watch,
@@ -36,9 +40,14 @@ export const RegisterPage = () => {
                         />
                     </Grid>
                 </Grid>
+                <Grid container spacing={2} display={!!errorMessage ? '' : 'none'}>
+                    <Grid size={{xs: 12}} sx={{mt: 2}}>
+                        <Alert severity="error">{ errorMessage }</Alert>
+                    </Grid>
+                </Grid>
                 <Grid container>
                     <Grid size={{xs:12}} sx={{mt: 2}}>
-                        <Button fullWidth variant="contained" color="primary" type="submit">Crear cuenta</Button>
+                        <Button fullWidth disabled={isAuthenticating} variant="contained" color="primary" type="submit">Crear cuenta</Button>
                     </Grid>
                 </Grid>
                 <Grid container direction={"row"} justifyContent={"end"}>

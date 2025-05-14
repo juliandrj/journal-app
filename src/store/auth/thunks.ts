@@ -4,12 +4,6 @@ import { LoginForm, RegisterForm, User } from "../../interfaces";
 import { AppDispatch } from "../store";
 import { checkingCredentials, login, logout } from "./authSlice";
 
-export const checkingAuthentication = (loginForm:LoginForm) => {
-    return async (dispatch:AppDispatch) => {
-        dispatch(checkingCredentials());
-    }
-}
-
 const generarUser = (result: UserCredential): User | undefined => {
     if (result && result.user) {
         return {
