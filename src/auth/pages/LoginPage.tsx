@@ -27,7 +27,7 @@ export const LoginPage = () => {
     }
     return (
         <AuthLayout title="Login">
-            <form onSubmit={handleSubmit(onSubmit)} >
+            <form onSubmit={handleSubmit(onSubmit)} className="animate__animated animate__fadeIn animate__faster" >
                 <Grid container>
                     <Grid size={{xs:12}} sx={{mt: 2}}>
                         <TextField fullWidth label="Nombre completo" type="text" placeholder="nombre completo" error={errors.user !== undefined} helperText={errors.user && "Nombre de usuario requerido"} {...register("user", {required: true})} />
@@ -38,7 +38,7 @@ export const LoginPage = () => {
                 </Grid>
                 <Grid container spacing={2} display={!!errorMessage ? '' : 'none'}>
                     <Grid size={{xs: 12}} sx={{mt: 2}}>
-                        <Alert severity="error">{ errorMessage }</Alert>
+                        <Alert severity="error" className="animate__animated animate__shakeX">{ errorMessage }</Alert>
                     </Grid>
                 </Grid>
                 <Grid container spacing={2}>
