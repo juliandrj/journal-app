@@ -1,6 +1,6 @@
-import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, updateCurrentUser, updateProfile } from "firebase/auth";
+import { createUserWithEmailAndPassword, GoogleAuthProvider, signInWithEmailAndPassword, signInWithPopup, updateProfile } from "firebase/auth";
 import { FirebaseAuth } from "./config";
-import { RegisterForm } from "../interfaces";
+import { LoginForm, RegisterForm } from "../interfaces";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -16,4 +16,8 @@ export const registerUserWithEmailPassword = async (registro : RegisterForm) => 
         await updateProfile(userCredential.user, { displayName: registro.displayName });
     }
     return userCredential;
+}
+
+export const signInWithEmailPassword = async (loginForm: LoginForm) => {
+    return await signInWithEmailAndPassword(FirebaseAuth, loginForm.user, loginForm.password);
 }

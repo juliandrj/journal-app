@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom"
 import { AuthLayout } from "../layout/AuthLayout"
 import { LoginForm } from "../../interfaces"
 import { useAppDispatch } from "../../store"
-import { checkingAuthentication, starGoogleSingIn } from "../../store/auth"
+import { starGoogleSingIn, startLoginWithEmailPassword } from "../../store/auth"
 import { useSelector } from "react-redux"
 import { RootState } from '../../store/store';
 import { useMemo } from "react"
@@ -20,7 +20,7 @@ export const LoginPage = () => {
         formState: { errors },
     } = useForm<LoginForm>();
     const onSubmit: SubmitHandler<LoginForm> = (data) => {
-        dispatch(checkingAuthentication(data));
+        dispatch(startLoginWithEmailPassword(data));
     }
     const onGoogleSignIn = () => {
         dispatch(starGoogleSingIn());

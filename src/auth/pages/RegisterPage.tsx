@@ -28,7 +28,7 @@ export const RegisterPage = () => {
                         <TextField fullWidth label="e-mail" type="email" placeholder="correo@mail.com" error={errors.email !== undefined} helperText={errors.email && "email requerido"} {...register("email", {required: true})}/>
                     </Grid>
                     <Grid size={{xs:12}} sx={{mt: 2}}>
-                        <TextField fullWidth label="Contraseña" type="password" placeholder="contraseña" error={errors.password !== undefined} helperText={errors.password && "Contraseña es obligatoria"} {...register("password", {required: true})}/>
+                        <TextField fullWidth label="Contraseña" type="password" placeholder="contraseña" error={errors.password !== undefined} helperText={errors.password && "Contraseña es obligatoria"} {...register("password", {required: true, minLength: 6})}/>
                     </Grid>
                     <Grid size={{xs:12}} sx={{mt: 2}}>
                         <TextField fullWidth label="Confirma contraseña" type="password" placeholder="confirma contraseña" error={errors.password2 !== undefined} helperText={errors.password2 && errors.password2.message}

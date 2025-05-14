@@ -1,5 +1,5 @@
 import { UserCredential } from "firebase/auth";
-import { signInWithGoogle, registerUserWithEmailPassword } from '../../firebase/providers';
+import { signInWithGoogle, registerUserWithEmailPassword, signInWithEmailPassword } from '../../firebase/providers';
 import { LoginForm, RegisterForm, User } from "../../interfaces";
 import { AppDispatch } from "../store";
 import { checkingCredentials, login, logout } from "./authSlice";
@@ -50,7 +50,27 @@ export const starWithEmailPassword = (registro: RegisterForm) => {
             const result = await registerUserWithEmailPassword(registro);
             const user = generarUser(result);
             if (user) {
-                
+                dispatch(login(user));
+            } else {
+                dispatch(logout("No se pudo obtener la información del usuario"));
+            }
+        } catch (e) {
+            if (e instanceof Error) {
+                dispatch(logout(e.message));
+            } else {
+                dispatch(logout(e));
+            }
+        }
+    }
+}
+
+export const startLoginWithEmailPassword = (loginForm: LoginForm) => {
+    return async (dispatch:AppDispatch) => {
+        dispatch(checkingCredentials());
+        try {
+            const result = await signInWithEmailPassword(loginForm);
+            const user = generarUser(result);
+            if (user) {
                 dispatch(login(user));
             } else {
                 dispatch(logout("No se pudo obtener la información del usuario"));
