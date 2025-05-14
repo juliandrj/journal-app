@@ -1,5 +1,6 @@
-import { signInWithGoogle } from "../../firebase/providers";
-import { LoginForm, User } from "../../interfaces";
+import { UserCredential } from "firebase/auth";
+import { signInWithGoogle, registerUserWithEmailPassword } from '../../firebase/providers';
+import { LoginForm, RegisterForm, User } from "../../interfaces";
 import { AppDispatch } from "../store";
 import { checkingCredentials, login, logout } from "./authSlice";
 
@@ -9,21 +10,50 @@ export const checkingAuthentication = (loginForm:LoginForm) => {
     }
 }
 
+const generarUser = (result: UserCredential): User | undefined => {
+    if (result && result.user) {
+        return {
+            uid: result.user.uid,
+            displayName: result.user.displayName || "",
+            email: result.user.email || "",
+            photoURL: result.user.photoURL || "",
+        }
+    }
+    return undefined;
+}
+
 export const starGoogleSingIn = () => {
     return async (dispatch:AppDispatch) => {
         dispatch(checkingCredentials());
         try {
             const result = await signInWithGoogle();
-            if (result && result.user) {
-                const user: User = {
-                    uid: result.user.uid,
-                    displayName: result.user.displayName || "",
-                    email: result.user.email || "",
-                    photoURL: result.user.photoURL || "",
-                }
+            const user = generarUser(result);
+            if (user) {
                 dispatch(login(user));
             } else {
-                dispatch(logout("No user found"));
+                dispatch(logout("No se pudo obtener la información del usuario"));
+            }
+        } catch (e) {
+            if (e instanceof Error) {
+                dispatch(logout(e.message));
+            } else {
+                dispatch(logout(e));
+            }
+        }
+    }
+}
+
+export const starWithEmailPassword = (registro: RegisterForm) => {
+    return async (dispatch:AppDispatch) => {
+        dispatch(checkingCredentials());
+        try {
+            const result = await registerUserWithEmailPassword(registro);
+            const user = generarUser(result);
+            if (user) {
+                
+                dispatch(login(user));
+            } else {
+                dispatch(logout("No se pudo obtener la información del usuario"));
             }
         } catch (e) {
             if (e instanceof Error) {

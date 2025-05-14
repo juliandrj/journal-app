@@ -4,5 +4,6 @@ export * from './JournalLayoutProps';
 export * from './DrawerWidthComponentProps';
 export * from './AuthState';
 export * from './LoginForm';
+export * from './RegisterForm';
 export * from './User';
 export * from './Error';
