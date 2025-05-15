@@ -23,7 +23,10 @@ export const authSlice = createSlice({
             state.status = 'checking';
             state.errorMessage = undefined;
         },
+        resetErrorMessage: (state) => {
+            state.errorMessage = undefined;
+        },
     }
 });
 
-export const { login, logout, checkingCredentials } = authSlice.actions;
+export const { login, logout, checkingCredentials, resetErrorMessage } = authSlice.actions;

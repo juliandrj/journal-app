@@ -5,7 +5,7 @@ import { AuthLayout } from "../layout/AuthLayout"
 import { RegisterForm } from "../../interfaces"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { RootState, useAppDispatch } from "../../store"
-import { starWithEmailPassword } from "../../store/auth"
+import { resetErrorMessage, starWithEmailPassword } from "../../store/auth"
 import { useSelector } from "react-redux"
 import { useMemo } from "react"
 
@@ -52,7 +52,7 @@ export const RegisterPage = () => {
                 </Grid>
                 <Grid container direction={"row"} justifyContent={"end"}>
                     <Typography sx={{mr: 1}}>¿Ya tienes cuenta?</Typography>
-                    <Link component={RouterLink} color="info" to="/auth/login">ingresar</Link>
+                    <Link component={RouterLink} color="info" to="/auth/login" onClick={() => dispatch(resetErrorMessage())}>ingresar</Link>
                 </Grid>
             </form>
         </AuthLayout>

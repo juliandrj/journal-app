@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom"
 import { AuthLayout } from "../layout/AuthLayout"
 import { LoginForm } from "../../interfaces"
 import { useAppDispatch } from "../../store"
-import { starGoogleSingIn, startLoginWithEmailPassword } from "../../store/auth"
+import { resetErrorMessage, starGoogleSingIn, startLoginWithEmailPassword } from "../../store/auth"
 import { useSelector } from "react-redux"
 import { RootState } from '../../store/store';
 import { useMemo } from "react"
@@ -53,7 +53,7 @@ export const LoginPage = () => {
                     </Grid>
                 </Grid>
                 <Grid container direction={"row"} justifyContent={"end"}>
-                    <Link component={RouterLink} color="info" to="/auth/register">Registrarse</Link>
+                    <Link component={RouterLink} color="info" to="/auth/register" onClick={() => dispatch(resetErrorMessage())}>Registrarse</Link>
                 </Grid>
             </form>
         </AuthLayout>
