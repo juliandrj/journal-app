@@ -9,3 +9,4 @@ export * from './User';
 export * from './Error';
 export * from './JournalState';
 export * from './Note';
+export * from './SideBarItemProps';
