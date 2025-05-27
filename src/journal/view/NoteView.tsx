@@ -9,10 +9,9 @@ import { useEffect, useMemo } from 'react';
 import { startUpdateNote } from '../../store/journal';
 export const NoteView = () => {
     const dispatch = useAppDispatch();
-    const {active:note} = useSelector((state:RootState) => state.journal);
+    const {active:note, isSaving} = useSelector((state:RootState) => state.journal);
     const { register,
             handleSubmit,
-            watch,
             reset,
             formState: { errors },
     } = useForm<Note>({defaultValues: note});
@@ -29,7 +28,7 @@ export const NoteView = () => {
         <>
             <Grid container direction="row" justifyContent="space-between" sx={{ mb: 1}}>
                 <Typography fontSize={39} fontWeight="light">{fecha}</Typography>
-                <Button color='primary' sx={{padding: 2}} onClick={handleSubmit(onSubmit)}>
+                <Button color='primary' sx={{padding: 2}} disabled={isSaving} onClick={handleSubmit(onSubmit)}>
                     <SaveOutlined sx={{ fontSize: 30, mr: 1 }} />
                     Guardar
                 </Button>

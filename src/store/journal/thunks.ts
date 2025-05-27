@@ -1,8 +1,8 @@
 import { collection, doc, getDocs, setDoc } from "firebase/firestore/lite";
 import { AppDispatch, RootState } from "../store"
 import { FirebaseDB } from "../../firebase/config";
-import { Note } from "../../interfaces";
-import { addNewEmptyNote, savingNewNote, setActiveNote, setNotes, setSaving, updateNote } from "./journalSlice";
+import { Mensaje, NivelMensaje, Note } from "../../interfaces";
+import { addNewEmptyNote, savingNewNote, setActiveNote, setMessagge, setNotes, setSaving, updateNote } from "./journalSlice";
 
 export const startNewNote = () => {
     return async (dispatch:AppDispatch, getState: () => RootState) => {
@@ -25,36 +25,54 @@ export const startNewNote = () => {
 
 export const startLoadingNotes = () => {
     return async (dispatch:AppDispatch, getState: () => RootState) => {
-        const { user } = getState().auth;
-        if (!user) {
-            throw new Error('Usuario no identificado');
-        }
-        const collectionRef = collection(FirebaseDB, `${user.uid}/journal/notes`);
-        const docs = await getDocs(collectionRef);
-        const notes: Note[] = [];
-        docs.forEach((doc) => {
-            const data = doc.data()
-            notes.push({
-                id: doc.id,
-                head: data.head,
-                body: data.body,
-                date: data.date,
-                images: data.images
+        try {
+            const { user } = getState().auth;
+            if (!user) {
+                throw new Error('Usuario no identificado');
+            }
+            const collectionRef = collection(FirebaseDB, `${user.uid}/journal/notes`);
+            const docs = await getDocs(collectionRef);
+            const notes: Note[] = [];
+            docs.forEach((doc) => {
+                const data = doc.data()
+                notes.push({
+                    id: doc.id,
+                    head: data.head,
+                    body: data.body,
+                    date: data.date,
+                    images: data.images
+                });
             });
-        });
-        dispatch(setNotes(notes));
+            dispatch(setNotes(notes));
+        } catch (error) {
+            const msg:Mensaje = {
+                titulo: 'Error al crear nota',
+                mensaje: `${error}`,
+                nivel: NivelMensaje.error
+            };
+            dispatch(setMessagge(msg));
+        }
     }
 }
 
 export const startUpdateNote = (note:Note) => {
     return async (dispatch:AppDispatch, getState: () => RootState) => {
-        const { user } = getState().auth;
-        if (!user) {
-            throw new Error('Usuario no identificado');
+        try {
+            const { user } = getState().auth;
+            if (!user) {
+                throw new Error('Usuario no identificado');
+            }
+            dispatch(setSaving());
+            const docRef = doc( FirebaseDB, `${user.uid}/journal/notes/${note.id}` );
+            await setDoc(docRef, note, { merge: true });
+            dispatch(updateNote(note));
+        } catch (error) {
+            const msg:Mensaje = {
+                titulo: `Error al actualizar nota "${note.head}"`,
+                mensaje: `${error}`,
+                nivel: NivelMensaje.error
+            };
+            dispatch(setMessagge(msg));
         }
-        dispatch(setSaving(""));
-        const docRef = doc( FirebaseDB, `${user.uid}/journal/notes/${note.id}` );
-        await setDoc(docRef, note, { merge: true });
-        dispatch(updateNote(note));
     }
 }

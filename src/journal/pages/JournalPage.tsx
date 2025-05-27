@@ -5,12 +5,21 @@ import { AddOutlined } from "@mui/icons-material";
 import { startNewNote } from "../../store/journal";
 import { RootState, useAppDispatch } from "../../store";
 import { useSelector } from "react-redux";
+import 'sweetalert2/dist/sweetalert2.css';
+import Swal from "sweetalert2";
+import { useEffect } from "react";
 
 const drawerWidth = 240;
 
 export const JournalPage = () => {
     const dispatch = useAppDispatch();
-    const { isSaving, active } = useSelector((state:RootState) => state.journal);
+    const { isSaving, active, mensaje } = useSelector((state:RootState) => state.journal);
+    useEffect(() => {
+        if ( !!mensaje ) {
+            Swal.fire( mensaje.titulo, mensaje.mensaje, mensaje.nivel );
+        }
+    }, [mensaje])
+    
     const onClickNewNote = () => {
         dispatch(startNewNote());
     };

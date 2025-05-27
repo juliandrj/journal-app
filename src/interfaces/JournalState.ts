@@ -1,8 +1,8 @@
-import { Note } from "./Note";
+import { Mensaje, Note } from "./";
 
 export interface JournalState {
     isSaving: boolean;
-    messageSaved?: string;
+    mensaje?: Mensaje
     notes: Note[];
     active?: Note;
 }

@@ -1,5 +1,5 @@
 import { createSlice } from '@reduxjs/toolkit';
-import { JournalState } from '../../interfaces/';
+import { JournalState, NivelMensaje } from '../../interfaces/';
 
 const initialState: JournalState = {
     isSaving: false,
@@ -12,10 +12,12 @@ export const journalSlice = createSlice({
     reducers: {
         savingNewNote: (state) => {
             state.isSaving = true;
+            state.mensaje = undefined;
         },
         addNewEmptyNote: (state, action) => {
             state.notes.push(action.payload);
             state.isSaving = false;
+            state.mensaje = undefined;
         },
         setActiveNote: (state, action) => {
             state.active = action.payload;
@@ -23,15 +25,27 @@ export const journalSlice = createSlice({
         setNotes: (state, action) => {
             state.notes = [...action.payload];
         },
-        setSaving: (state, action) => {
+        setSaving: (state) => {
             state.isSaving = true;
-            //TODO: Mensaje de error.
         },
         updateNote: (state, action) => {
             state.notes = state.notes.map( note => note.id === action.payload.id ? action.payload : note );
             state.isSaving = false;
+            state.mensaje = {
+                titulo: 'Nota actualizada',
+                mensaje: `La nota "${action.payload.head}", se ha actualizado.`,
+                nivel: NivelMensaje.success
+            };
         },
+        setMessagge: (state, action) => {
+            state.isSaving = false;
+            state.mensaje = {
+                titulo: action.payload.titulo,
+                mensaje: action.payload.mensaje,
+                nivel: action.payload.nivel
+            };
+        }
     }
 });
 
-export const { savingNewNote, addNewEmptyNote, setActiveNote, setNotes, setSaving, updateNote, } = journalSlice.actions;
+export const { savingNewNote, addNewEmptyNote, setActiveNote, setNotes, setSaving, updateNote, setMessagge, } = journalSlice.actions;

@@ -10,3 +10,4 @@ export * from './Error';
 export * from './JournalState';
 export * from './Note';
 export * from './SideBarItemProps';
+export * from './Mensaje';
