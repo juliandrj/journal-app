@@ -3,6 +3,7 @@ import { AppDispatch, RootState } from "../store"
 import { FirebaseDB } from "../../firebase/config";
 import { Mensaje, NivelMensaje, Note } from "../../interfaces";
 import { addNewEmptyNote, savingNewNote, setActiveNote, setMessagge, setNotes, setSaving, updateNote } from "./journalSlice";
+import { uploadFile } from "../../helpers";
 
 export const startNewNote = () => {
     return async (dispatch:AppDispatch, getState: () => RootState) => {
@@ -75,4 +76,30 @@ export const startUpdateNote = (note:Note) => {
             dispatch(setMessagge(msg));
         }
     }
+}
+
+export const startUploadFile = (note: Note, fileList: FileList) => {
+    return async (dispatch:AppDispatch, getState: () => RootState) => {
+        try {
+            const { user } = getState().auth;
+            if (!user) {
+                throw new Error('Usuario no identificado');
+            }
+            dispatch(setSaving());
+            const fileUploadPromises = [];
+            for ( const file  of fileList ) {
+                fileUploadPromises.push(uploadFile( file ));
+            }
+            const photosUrls = await Promise.all(fileUploadPromises);
+            note.images = [...note.images, ...photosUrls];
+            dispatch(startUpdateNote(note));
+        } catch (error) {
+            const msg:Mensaje = {
+                titulo: `No se logró cargar los ficheros`,
+                mensaje: `${error}`,
+                nivel: NivelMensaje.error
+            };
+            dispatch(setMessagge(msg));
+        }
+    };
 }

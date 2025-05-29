@@ -30,6 +30,7 @@ export const journalSlice = createSlice({
         },
         updateNote: (state, action) => {
             state.notes = state.notes.map( note => note.id === action.payload.id ? action.payload : note );
+            state.active = action.payload;
             state.isSaving = false;
             state.mensaje = {
                 titulo: 'Nota actualizada',

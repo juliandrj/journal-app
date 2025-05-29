@@ -1,5 +1,4 @@
-import { Note } from "./Note";
+import { NoteBasedProps } from "./NoteBasedProps";
 
-export interface SideBarItemProps {
-    note: Note;
+export interface SideBarItemProps extends NoteBasedProps {
 }

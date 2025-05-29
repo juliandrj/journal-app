@@ -11,3 +11,6 @@ export * from './JournalState';
 export * from './Note';
 export * from './SideBarItemProps';
 export * from './Mensaje';
+export * from './CloudinaryResponse';
+export * from './NoteBasedProps';
+export * from './ImageGalleryProps';
