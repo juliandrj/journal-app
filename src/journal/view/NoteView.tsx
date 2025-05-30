@@ -1,4 +1,4 @@
-import { SaveOutlined, UploadFileOutlined } from '@mui/icons-material';
+import { DeleteOutline, SaveOutlined, UploadFileOutlined } from '@mui/icons-material';
 import { Grid2 as Grid, IconButton, TextField, Typography } from '@mui/material';
 import { ImageGallery } from '../components';
 import { RootState, useAppDispatch } from '../../store';
@@ -6,7 +6,8 @@ import { useSelector } from 'react-redux';
 import { SubmitHandler, useForm } from 'react-hook-form';
 import { Note } from '../../interfaces';
 import { useEffect, useMemo, useRef } from 'react';
-import { startUpdateNote, startUploadFile } from '../../store/journal';
+import { startDeleteNote, startUpdateNote, startUploadFile } from '../../store/journal';
+
 export const NoteView = () => {
     const dispatch = useAppDispatch();
     const {active:note, isSaving} = useSelector((state:RootState) => state.journal);
@@ -29,6 +30,9 @@ export const NoteView = () => {
             dispatch(startUploadFile(note, target.files as FileList));
         }
     };
+    const onDeleteClick = () => {
+        dispatch(startDeleteNote());
+    };
     const fecha = useMemo(() => {
         return !!!note ? 'Sin fecha' : new Date(note.date).toUTCString();
     }, [note?.date]);
@@ -39,6 +43,9 @@ export const NoteView = () => {
                     <Typography fontSize={24} fontWeight="light">{fecha}</Typography>
                 </Grid>
                 <Grid size={{sm: 12, md: 4}} container justifyContent="end">
+                    <IconButton color='error' sx={{padding: 2}} disabled={isSaving} onClick={onDeleteClick} >
+                        <DeleteOutline sx={{ fontSize: 30, mr: 1 }} />
+                    </IconButton>
                     <input type='file' multiple onChange={onChangeFiles} style={{display: 'none'}} ref={fileInputRef} />
                     <IconButton color='primary' sx={{padding: 2}} disabled={isSaving} onClick={() => fileInputRef.current?.click()}>
                         <UploadFileOutlined sx={{ fontSize: 30, mr: 1 }} />

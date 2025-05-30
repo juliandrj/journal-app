@@ -1,8 +1,8 @@
-import { collection, doc, getDocs, setDoc } from "firebase/firestore/lite";
+import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore/lite";
 import { AppDispatch, RootState } from "../store"
 import { FirebaseDB } from "../../firebase/config";
 import { Mensaje, NivelMensaje, Note } from "../../interfaces";
-import { addNewEmptyNote, savingNewNote, setActiveNote, setMessagge, setNotes, setSaving, updateNote } from "./journalSlice";
+import { addNewEmptyNote, deleteNote, savingNewNote, setActiveNote, setMessagge, setNotes, setSaving, updateNote } from "./journalSlice";
 import { uploadFile } from "../../helpers";
 
 export const startNewNote = () => {
@@ -102,4 +102,30 @@ export const startUploadFile = (note: Note, fileList: FileList) => {
             dispatch(setMessagge(msg));
         }
     };
+}
+
+export const startDeleteNote = () => {
+    return async (dispatch:AppDispatch, getState: () => RootState) => {
+        const { active:note } = getState().journal;
+        if (!note) {
+            throw new Error('Nota activa no especificada');
+        }
+        try {
+            const { user } = getState().auth;
+            if (!user) {
+                throw new Error('Usuario no identificado');
+            }
+            dispatch(setSaving());
+            const docRef = doc( FirebaseDB, `${user.uid}/journal/notes/${note.id}` );
+            await deleteDoc(docRef);
+            dispatch(deleteNote(note));
+        } catch (error) {
+            const msg:Mensaje = {
+                titulo: `Error al actualizar nota "${note.head}"`,
+                mensaje: `${error}`,
+                nivel: NivelMensaje.error
+            };
+            dispatch(setMessagge(msg));
+        }
+    }
 }
