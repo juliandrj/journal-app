@@ -3,6 +3,7 @@ import { signInWithGoogle, registerUserWithEmailPassword, signInWithEmailPasswor
 import { LoginForm, RegisterForm, User } from "../../interfaces";
 import { AppDispatch } from "../store";
 import { checkingCredentials, login, logout } from "./authSlice";
+import { clearJournalState } from "../journal";
 
 const generarUser = (result: UserCredential): User | undefined => {
     if (result && result.user) {
@@ -82,6 +83,7 @@ export const startLoginWithEmailPassword = (loginForm: LoginForm) => {
 export const startLogout = () => {
     return async(dispatch:AppDispatch) => {
         await logoutFirebase();
+        dispatch(clearJournalState());
         dispatch(logout("Sesión finalizada."));
     }
 }

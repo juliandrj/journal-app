@@ -45,8 +45,14 @@ export const journalSlice = createSlice({
                 mensaje: action.payload.mensaje,
                 nivel: action.payload.nivel
             };
+        },
+        clearJournalState: (state) => {
+            state.isSaving = initialState.isSaving;
+            state.active = initialState.active;
+            state.mensaje = initialState.mensaje;
+            state.notes = initialState.notes;
         }
     }
 });
 
-export const { savingNewNote, addNewEmptyNote, setActiveNote, setNotes, setSaving, updateNote, setMessagge, } = journalSlice.actions;
+export const { savingNewNote, addNewEmptyNote, setActiveNote, setNotes, setSaving, updateNote, setMessagge, clearJournalState, } = journalSlice.actions;
