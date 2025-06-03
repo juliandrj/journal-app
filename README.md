@@ -1,54 +1,62 @@
-# React + TypeScript + Vite
+# Journal App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
-
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+## Instalar el entorno de pruebas
+```bash
+yarn add --dev jest babel-jest jest-environment-jsdom ts-jest ts-node @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest whatwg-fetch
 ```
-
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
-
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
+## Agregar script a package.json
+```json
+"scripts": {
+  ...
+  "test": "jest --watchAll"
+}
+```
+```json
+"jest": {
+  "testEnvironment": "jsdom",
+  "setupFilesAfterEnv": [
+    "<rootDir>/setup-test.ts"
+  ],
+  "moduleNameMapper": {
+    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
+    "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js"
   },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+  "collectCoverageFrom": [
+    "src/**/*.{js,jsx,ts,tsx}",
+    "!src/**/*.d.ts",
+    "!src/**/*.{spec,test}.{js,jsx,ts,tsx}",
+    "!**/node_modules/**",
+    "!**/vendor/**",
+    "!**/dist/**",
+    "!**/build/**",
+    "!vite.config.ts",
+    "!**/coverage/**"
+  ],
+  "coveragePathIgnorePatterns": [
+    "/node_modules/",
+    "setup-tests.ts",
+    "vite-env.d.ts"
+  ],
+  "transform": {
+    "^.+\\.tsx?$": "ts-jest"
+  }
+}
+```
+## Agregar configuración
+### babel.config.cjs
+```javascript
+module.exports = {
+  presets: [
+      ['@babel/preset-env', { targets: { esmodules: true } }],
+      ['@babel/preset-react', { runtime: 'automatic' }],
+      '@babel/preset-typescript',
+  ]
+};
+```
+### setup-test.ts
+```typescript
+import '@testing-library/jest-dom';
+import {TextEncoder} from 'util';
+
+global.TextEncoder = TextEncoder;
 ```
