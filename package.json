@@ -64,6 +64,7 @@
       "^../env$": "<rootDir>/tests/__mocks__/env.ts",
       "^./config$": "<rootDir>/tests/__mocks__/firebase-config.ts",
       "^../../firebase/providers$": "<rootDir>/tests/__mocks__/firebase-providers.ts",
+      "^../../../src/firebase/providers$": "<rootDir>/tests/__mocks__/firebase-providers.ts",
       "^firebase/firestore/lite$": "<rootDir>/tests/__mocks__/firebase-lite.ts"
     },
     "collectCoverageFrom": [

@@ -23,11 +23,7 @@ export const starGoogleSingIn = () => {
         try {
             const result = await signInWithGoogle();
             const user = generarUser(result);
-            if (user) {
-                dispatch(login(user));
-            } else {
-                dispatch(logout("No se pudo obtener la información del usuario"));
-            }
+            dispatch(login(user));
         } catch (e) {
             if (e instanceof Error) {
                 dispatch(logout(e.message));
