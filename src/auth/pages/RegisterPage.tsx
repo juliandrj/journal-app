@@ -5,7 +5,7 @@ import { AuthLayout } from "../layout/AuthLayout"
 import { RegisterForm } from "../../interfaces"
 import { SubmitHandler, useForm } from "react-hook-form"
 import { RootState, useAppDispatch } from "../../store"
-import { resetErrorMessage, starWithEmailPassword } from "../../store/auth"
+import { resetErrorMessage, startWithEmailPassword } from "../../store/auth"
 import { useSelector } from "react-redux"
 import { useMemo } from "react"
 
@@ -19,7 +19,7 @@ export const RegisterPage = () => {
             formState: { errors },
     } = useForm<RegisterForm>();
     const onSubmit: SubmitHandler<RegisterForm> = (data: RegisterForm) => {
-        dispatch(starWithEmailPassword(data));
+        dispatch(startWithEmailPassword(data));
     }
     return (
         <AuthLayout title="Crear cuenta">

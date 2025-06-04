@@ -17,7 +17,7 @@ const generarUser = (result: UserCredential): User | undefined => {
     return undefined;
 }
 
-export const starGoogleSingIn = () => {
+export const startGoogleSingIn = () => {
     return async (dispatch:AppDispatch) => {
         dispatch(checkingCredentials());
         try {
@@ -34,7 +34,7 @@ export const starGoogleSingIn = () => {
     }
 }
 
-export const starWithEmailPassword = (registro: RegisterForm) => {
+export const startWithEmailPassword = (registro: RegisterForm) => {
     return async (dispatch:AppDispatch) => {
         dispatch(checkingCredentials());
         try {

@@ -5,7 +5,7 @@ import { Link as RouterLink } from "react-router-dom"
 import { AuthLayout } from "../layout/AuthLayout"
 import { LoginForm } from "../../interfaces"
 import { useAppDispatch } from "../../store"
-import { resetErrorMessage, starGoogleSingIn, startLoginWithEmailPassword } from "../../store/auth"
+import { resetErrorMessage, startGoogleSingIn, startLoginWithEmailPassword } from "../../store/auth"
 import { useSelector } from "react-redux"
 import { RootState } from '../../store/store';
 import { useMemo } from "react"
@@ -23,7 +23,7 @@ export const LoginPage = () => {
         dispatch(startLoginWithEmailPassword(data));
     }
     const onGoogleSignIn = () => {
-        dispatch(starGoogleSingIn());
+        dispatch(startGoogleSingIn());
     }
     return (
         <AuthLayout title="Login">
