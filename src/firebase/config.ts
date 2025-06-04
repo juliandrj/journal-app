@@ -1,14 +1,15 @@
 import { initializeApp } from "firebase/app";
 import { getAuth } from "firebase/auth";
 import { getFirestore } from "firebase/firestore/lite";
+import { env } from "../env";
 
 const firebaseConfig = {
-    apiKey: import.meta.env.VITE_FIREBASE_APIKEY,
-    authDomain: import.meta.env.VITE_FIREBASE_AUTHDOMAIN,
-    projectId: import.meta.env.VITE_FIREBASE_PROJECTID,
-    storageBucket: import.meta.env.VITE_FIREBASE_STORAGEBUCKET,
-    messagingSenderId: import.meta.env.VITE_FIREBASE_MESSAGINGSENDERID,
-    appId: import.meta.env.VITE_FIREBASE_APPID
+    apiKey: env.FIREBASE_APIKEY,
+    authDomain: env.FIREBASE_AUTHDOMAIN,
+    projectId: env.FIREBASE_PROJECTID,
+    storageBucket: env.FIREBASE_STORAGEBUCKET,
+    messagingSenderId: env.FIREBASE_MESSAGINGSENDERID,
+    appId: env.FIREBASE_APPID
 };
 
 export const FirebaseApp = initializeApp(firebaseConfig);

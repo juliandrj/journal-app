@@ -1,10 +1,11 @@
+import { env } from "../env";
 import { CloudinaryResponse } from "../interfaces";
 
 export const uploadFile = async (file:File) => {
-    const url = `https://api.cloudinary.com/v1_1/${import.meta.env.VITE_CLOUDINARY_CLOUDNAME}/${import.meta.env.VITE_CLOUDINARY_RESOURCE_TYPE}/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${env.CLOUDINARY_CLOUDNAME}/${env.CLOUDINARY_RESOURCE_TYPE}/upload`;
     const formData = new FormData();
     formData.append('file', file);
-    formData.append('upload_preset', import.meta.env.VITE_CLOUDINARY_UPLOAD_PRESET);
+    formData.append('upload_preset', env.CLOUDINARY_UPLOAD_PRESET);
     const resp = await fetch( url, {
         method: 'POST',
         body: formData

@@ -60,7 +60,8 @@
     ],
     "moduleNameMapper": {
       "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-      "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js"
+      "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js",
+      "^./env$": "<rootDir>/tests/__mocks__/env.ts"
     },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
