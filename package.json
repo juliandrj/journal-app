@@ -54,14 +54,17 @@
     "whatwg-fetch": "^3.6.20"
   },
   "jest": {
+    "preset": "ts-jest",
     "testEnvironment": "jsdom",
     "setupFilesAfterEnv": [
       "<rootDir>/setup-test.ts"
     ],
     "moduleNameMapper": {
-      "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-      "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js",
-      "^./env$": "<rootDir>/tests/__mocks__/env.ts"
+      "^@/(.*)$": "<rootDir>/src/$1",
+      "^../env$": "<rootDir>/tests/__mocks__/env.ts",
+      "^./config$": "<rootDir>/tests/__mocks__/firebase-config.ts",
+      "^../../firebase/providers$": "<rootDir>/tests/__mocks__/firebase-providers.ts",
+      "^firebase/firestore/lite$": "<rootDir>/tests/__mocks__/firebase-lite.ts"
     },
     "collectCoverageFrom": [
       "src/**/*.{js,jsx,ts,tsx}",
@@ -78,6 +81,9 @@
       "/node_modules/",
       "setup-tests.ts",
       "vite-env.d.ts"
+    ],
+    "transformIgnorePatterns": [
+      "node_modules/firebase/.*"
     ],
     "transform": {
       "^.+\\.tsx?$": "ts-jest"
