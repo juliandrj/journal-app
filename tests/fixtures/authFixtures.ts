@@ -1,4 +1,4 @@
-import { AuthState, User } from "../../src/interfaces";
+import { AuthState, LoginForm, RegisterForm, User } from "../../src/interfaces";
 import { IdTokenResult, User as AuthUser, UserCredential } from 'firebase/auth';
 
 export const userCredentialUser: AuthUser = {
@@ -41,6 +41,19 @@ export const demoUser: User = {
     displayName: `${userCredentialUser.displayName}`,
     email: `${userCredentialUser.email}`,
     photoURL: `${userCredentialUser.photoURL}`
+};
+
+export const registerFormData: RegisterForm = {
+    displayName: demoUser.displayName,
+    email: demoUser.email,
+    password: 'abcdefgh',
+    password2: '',
+    user: ''
+};
+
+export const loginFormData: LoginForm = {
+    user: demoUser.email,
+    password: registerFormData.password
 };
 
 export const authenticatedState: AuthState = {

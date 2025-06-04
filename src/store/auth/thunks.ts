@@ -40,11 +40,7 @@ export const startWithEmailPassword = (registro: RegisterForm) => {
         try {
             const result = await registerUserWithEmailPassword(registro);
             const user = generarUser(result);
-            if (user) {
-                dispatch(login(user));
-            } else {
-                dispatch(logout("No se pudo obtener la información del usuario"));
-            }
+            dispatch(login(user));
         } catch (e) {
             if (e instanceof Error) {
                 dispatch(logout(e.message));
@@ -61,11 +57,7 @@ export const startLoginWithEmailPassword = (loginForm: LoginForm) => {
         try {
             const result = await signInWithEmailPassword(loginForm);
             const user = generarUser(result);
-            if (user) {
-                dispatch(login(user));
-            } else {
-                dispatch(logout("No se pudo obtener la información del usuario"));
-            }
+            dispatch(login(user));
         } catch (e) {
             if (e instanceof Error) {
                 dispatch(logout(e.message));
