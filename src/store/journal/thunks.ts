@@ -1,6 +1,6 @@
 import { collection, deleteDoc, doc, getDocs, setDoc } from "firebase/firestore/lite";
 import { AppDispatch, RootState } from "../store"
-import { FirebaseDB } from "../../firebase/config";
+import { FirebaseDB } from "../../firebase/firebaseConfig";
 import { Mensaje, NivelMensaje, Note } from "../../interfaces";
 import { addNewEmptyNote, deleteNote, savingNewNote, setActiveNote, setMessagge, setNotes, setSaving, updateNote } from "./journalSlice";
 import { uploadFile } from "../../helpers";

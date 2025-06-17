@@ -1,4 +1,4 @@
-import { JournalState, Mensaje, NivelMensaje, Note } from '../../../src/interfaces';
+import { JournalState, Mensaje, NivelMensaje } from '../../../src/interfaces';
 import { addNewEmptyNote, clearJournalState, deleteNote, journalSlice, savingNewNote, setActiveNote, setMessagge, setNotes, setSaving, updateNote } from '../../../src/store/journal/journalSlice';
 import { initialJournalState, note } from '../../fixtures';
 

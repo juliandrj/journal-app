@@ -1,6 +1,6 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
-import { FirebaseAuth } from "../firebase/config";
+import { FirebaseAuth } from "../firebase/firebaseConfig";
 import { login, logout } from "../store/auth";
 import { User } from "../interfaces";
 import { RootState, useAppDispatch } from "../store";
