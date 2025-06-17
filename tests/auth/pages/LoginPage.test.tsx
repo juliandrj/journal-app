@@ -4,8 +4,11 @@ import { configureStore } from '@reduxjs/toolkit';
 import { authSlice } from '../../../src/store/auth';
 import { Provider } from 'react-redux';
 import { MemoryRouter } from 'react-router-dom';
+import { axe, toHaveNoViolations } from 'jest-axe';
 
 describe('Pruebas en <LoginPage>', () => {
+
+    expect.extend( toHaveNoViolations );
 
     const store = configureStore({
         reducer: {
@@ -21,6 +24,8 @@ describe('Pruebas en <LoginPage>', () => {
                 </MemoryRouter>
             </Provider>
         );
+        const results = await axe( container );
+        expect( results ).toHaveNoViolations();
     });
 
 });

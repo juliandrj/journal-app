@@ -4,6 +4,10 @@
 ```bash
 yarn add --dev jest babel-jest jest-environment-jsdom ts-jest ts-node @babel/preset-env @babel/preset-react @babel/preset-typescript @testing-library/dom @testing-library/jest-dom @testing-library/react @testing-library/user-event @types/jest whatwg-fetch
 ```
+## Instalar dependencias de AXE
+```bash
+yarn add --dev jest-axe @types/jest-axe
+```
 ## Agregar script a package.json
 ```json
 "scripts": {
@@ -13,13 +17,18 @@ yarn add --dev jest babel-jest jest-environment-jsdom ts-jest ts-node @babel/pre
 ```
 ```json
 "jest": {
+  "preset": "ts-jest",
   "testEnvironment": "jsdom",
   "setupFilesAfterEnv": [
     "<rootDir>/setup-test.ts"
   ],
   "moduleNameMapper": {
-    "\\.(css|less|scss|sass)$": "identity-obj-proxy",
-    "\\.(jpg|jpeg|png|gif|webp|svg)$": "<rootDir>/__mocks__/fileMock.js"
+    "^@/(.*)$": "<rootDir>/src/$1",
+    "^../env$": "<rootDir>/tests/__mocks__/env.ts",
+    "^./firebaseConfig$": "<rootDir>/tests/__mocks__/firebase-config.ts", /* OJO: Nada puede llamarse "config" únicamente porque causa un error con @testing-library/dom */
+    "^../../firebase/providers$": "<rootDir>/tests/__mocks__/firebase-providers.ts",
+    "^../../../src/firebase/providers$": "<rootDir>/tests/__mocks__/firebase-providers.ts",
+    "^firebase/firestore/lite$": "<rootDir>/tests/__mocks__/firebase-lite.ts"
   },
   "collectCoverageFrom": [
     "src/**/*.{js,jsx,ts,tsx}",
@@ -37,12 +46,35 @@ yarn add --dev jest babel-jest jest-environment-jsdom ts-jest ts-node @babel/pre
     "setup-tests.ts",
     "vite-env.d.ts"
   ],
+  "transformIgnorePatterns": [
+    "node_modules/firebase/.*"
+  ],
   "transform": {
-    "^.+\\.tsx?$": "ts-jest"
+    "^.+\\.tsx?$": [
+      "ts-jest",
+      {
+        "tsconfig": "tsconfig.jest.json"
+      }
+    ]
   }
 }
 ```
 ## Agregar configuración
+### tsconfig.jest.json
+```json
+{
+  "extends": "./tsconfig.app.json",
+  "esModuleInterop": true,
+  "compilerOptions": {
+      "jsx": "react-jsx",
+      "esModuleInterop": true
+  },
+  "include": [
+      "src",
+      "tests"
+  ]
+}
+```
 ### babel.config.cjs
 ```javascript
 module.exports = {
@@ -56,6 +88,7 @@ module.exports = {
 ### setup-test.ts
 ```typescript
 import '@testing-library/jest-dom';
+import 'whatwg-fetch';
 import {TextEncoder} from 'util';
 
 global.TextEncoder = TextEncoder;
