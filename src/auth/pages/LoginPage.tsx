@@ -27,13 +27,13 @@ export const LoginPage = () => {
     }
     return (
         <AuthLayout title="Login">
-            <form onSubmit={handleSubmit(onSubmit)} className="animate__animated animate__fadeIn animate__faster" >
+            <form onSubmit={handleSubmit(onSubmit)} className="animate__animated animate__fadeIn animate__faster" data-testid="formElement" >
                 <Grid container>
                     <Grid size={{xs:12}} sx={{mt: 2}}>
-                        <TextField fullWidth label="Nombre completo" type="text" placeholder="nombre completo" error={errors.user !== undefined} helperText={errors.user && "Nombre de usuario requerido"} {...register("user", {required: true})} />
+                        <TextField fullWidth label="Correo" type="text" placeholder="correo electrónico" error={errors.user !== undefined} helperText={errors.user && "Nombre de usuario requerido"} {...register("user", {required: true})} slotProps={{htmlInput: {"data-testid": "user-txt"}}} />
                     </Grid>
                     <Grid size={{xs:12}} sx={{mt: 2}}>
-                        <TextField fullWidth label="contraseña" type="password" placeholder="contraseña" error={errors.password !== undefined} helperText={errors.password && "Contraseña requerida"} {...register("password", {required: true})} />
+                        <TextField fullWidth label="contraseña" type="password" placeholder="contraseña" error={errors.password !== undefined} helperText={errors.password && "Contraseña requerida"} {...register("password", {required: true})} slotProps={{htmlInput: {"data-testid": "password-txt"}}} />
                     </Grid>
                 </Grid>
                 <Grid container spacing={2} display={!!errorMessage ? '' : 'none'}>
@@ -46,7 +46,7 @@ export const LoginPage = () => {
                         <Button type="submit" fullWidth disabled={isAuthenticating} variant="contained" color="primary">Login</Button>
                     </Grid>
                     <Grid size={{xs:12, sm:6}} sx={{mt: 2}}>
-                        <Button fullWidth disabled={isAuthenticating} onClick={onGoogleSignIn} variant="contained" color="primary">
+                        <Button fullWidth disabled={isAuthenticating} onClick={onGoogleSignIn} variant="contained" color="primary" data-testid="google-btn" >
                             <Google />
                             <Typography sx={{ml: 1}}>Google</Typography>
                         </Button>
