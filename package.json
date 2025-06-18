@@ -8,7 +8,8 @@
     "build": "tsc -b && vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "test": "jest --watchAll"
+    "test": "jest --watchAll --testMatch='**/!(*.axe).test.(ts|tsx)'",
+    "test:accessibility": "jest --testMatch='**/*.axe.test.tsx'"
   },
   "dependencies": {
     "@emotion/react": "^11.14.0",

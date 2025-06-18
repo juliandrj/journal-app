@@ -12,9 +12,11 @@ yarn add --dev jest-axe @types/jest-axe
 ```json
 "scripts": {
   ...
-  "test": "jest --watchAll"
+  "test": "jest --watchAll --testMatch='**/!(*.axe).test.(ts|tsx)'",
+  "test:accessibility": "jest --testMatch='**/*.axe.test.tsx'"
 }
 ```
+Así se separa la ejecución de los tests de accesibilidad de los demás. Todos los ficheros *.axe.tests.ts o tsx son tests de accesibilidad.
 ```json
 "jest": {
   "preset": "ts-jest",
